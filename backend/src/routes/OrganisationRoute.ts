@@ -40,14 +40,13 @@
 
 import express from 'express';
 const app=express.Router();
-import Organisation from '../models/Organisation';
 import Org from '../controller/OrganisationController'
 app.post('/signup',Org.sign);
 app.post('/orguser',Org.orguser);
 app.get('/Allorg',Org.allorg);
 app.delete(('/delete/:org_name'),Org.delete);
 export default app;
-
+//http://localhost:8001/org/signup
 
 
 

@@ -16,3 +16,4 @@ type EType = {
   interface Iprop{
     orgName:string,
   }
+  

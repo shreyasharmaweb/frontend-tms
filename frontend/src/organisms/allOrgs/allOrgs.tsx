@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import { useNavigate} from 'react-router-dom';
+import {NavLink, useNavigate} from 'react-router-dom';
 
 import './allOrg.scss'
 
@@ -35,7 +35,7 @@ export default function Orgs() {
       
         <div className='Orge'>
           <h2>Adding more Organisations </h2>
-        {/* <NavLink className='nav' to='/Orgnew'>ADD</NavLink> */}
+        <NavLink className='nav' to='/Orgnew'>ADD</NavLink>
         </div>
       {data.map((e:EType,i:number) => (
         <div className='Org'>

@@ -1,6 +1,6 @@
 import {  NavLink } from 'react-router-dom';
 import './loginAll.scss'
-export default function Login(props:any) {
+export default function Login(props:UserLogin) {
   const bg = props.color;
   const fontColor = props.fontColor;
   const user = props.user;

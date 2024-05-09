@@ -10,4 +10,4 @@ app.post('/otp',SysUser.otpUser);
 
 export default app;
 
-  
+  //http://localhost:8001/org/signup
