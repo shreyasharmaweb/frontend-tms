@@ -1,0 +1,35 @@
+// .otp{
+//     height: 600px;
+//     width: 50%;
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     align-items: center;
+//     font-size: 1.3rem;
+//     gap: 1rem;
+//     background-color: aliceblue;
+// }
+// .m{
+//     background-color:#9A639F ;
+// }
+.head{
+    align-self: center;
+    margin-left: 0%;
+}
+.otp{
+        height: 500px;
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.3rem;
+        gap: 1rem;
+        margin-left: 20%;
+}
+.input{
+      
+       height: 50px;
+       width:190px;
+       border-radius: 2%;
+}

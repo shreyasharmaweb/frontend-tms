@@ -1,0 +1,70 @@
+.Orge {
+    margin-bottom: 20px; 
+    padding: 10px; 
+    background-color: #f5ebf7; 
+    border-radius: 5px; 
+    width: 400px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  }
+  h2{
+    color:black
+  }
+  .Orge button {
+    margin-top: 10px; 
+    background-color: #ff5555; 
+    color: white; 
+    border: none;
+    padding: 5px 10px; 
+    border-radius: 3px; 
+    cursor: pointer; 
+  }
+  .Orge button:hover {
+    background-color: #cc0000; 
+  }
+  
+.Org {
+    margin-bottom: 20px; 
+    padding: 10px; 
+    background-color: #735878; 
+    border-radius: 5px; 
+    display: flex;
+    
+    width: 300px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  }
+  
+  
+  .NavLink {
+    font-weight: bold;
+    color: rgb(7, 7, 10); 
+    margin-right: 100%;
+  }
+  
+ 
+  .Org button {
+    margin-top: 10px; 
+    background-color: #ff5555; 
+    color: white; 
+    border: none;
+    padding: 5px 10px; 
+    border-radius: 3px; 
+    cursor: pointer; 
+  }
+  
+  
+  .Org button:hover {
+    background-color: #cc0000; 
+  }
+  .Orge {
+    margin-bottom: 20px; 
+    padding: 10px; 
+    background-color: #f5ebf7; 
+    border-radius: 5px; 
+    width: 300px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  }
+  .main{
+    display: flex;
+    gap:20px;
+    flex-wrap: wrap;
+   }

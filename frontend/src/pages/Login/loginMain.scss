@@ -1,0 +1,20 @@
+.mainn
+{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-evenly;
+    height: 100%;
+    margin: 0;
+    gap:10px;
+    align-items: center;
+}
+.div{
+    width: 250px;
+}
+h2{
+    color: #f0f0f0;
+  }
+  
+//   body{
+//     background-color: #dbc8df;
+//   }

@@ -1,0 +1,24 @@
+* {
+    margin-bottom: 30px;
+    margin-left: 40px;
+    margin-right: 12px;
+    // background-color: plum;
+  }
+.box{
+    height: 89.8vh;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+}
+.inner1,.inner2{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.inner2{
+    margin-top:2rem;
+}
