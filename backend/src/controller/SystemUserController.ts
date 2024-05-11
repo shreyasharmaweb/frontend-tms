@@ -8,8 +8,10 @@ class SysUser{
       public static async Sys(req:Request<{},{},{email:string}>,res:Response):Promise<any>{
         const {email}=req.body;
         const Sys=await SystemUserDao.syssign(email);
-        console.log("inside controller",Sys);
-        await sendEmail(email);   
+        await sendEmail(email);
+        console.log('>>>>>>>>>>>>>>>IVE REACHED')
+        return res.status(200).json({ valid: true, message: 'OTP is valid' });
+        
     } //cam-function
     //Request<{},{},{}>
 
@@ -20,7 +22,6 @@ class SysUser{
       if (!user) {
         return res.status(404).json({ valid: false, message: 'User not found' });
       }
-      
       if (user.otp == otp) {
         return res.status(200).json({ valid: true, message: 'OTP is valid' });
       }

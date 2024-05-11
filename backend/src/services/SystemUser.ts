@@ -9,7 +9,6 @@ const transporter = nodemailer.createTransport({
     user: "shreyasharma7051@gmail.com",
     pass: "jvcmyavhiwdpvzai",
   },
-
 });
 
 export const sendEmail=
@@ -39,7 +38,8 @@ export const sendEmail=
     transporter.sendMail(mailOptions,function(err,info){
        if(err){
         console.log(err);
+       }else{
+           console.log(info);
        }
     })
-
 }

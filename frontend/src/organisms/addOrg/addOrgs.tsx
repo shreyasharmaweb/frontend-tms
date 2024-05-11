@@ -8,18 +8,16 @@ export default function OrgNew() {
     name: ""
   });
   const [err,Seterr]=useState<{[key:string]:string}>({});
-  // console.log(err);
 const form = () => {
   const error: { [key: string]: string } = {};
 
-  if (!neworg.org_name.trim()) {
-    error.orgname = "Please enter the organization key";
+  if (!neworg.org_name.trim() ) {
+    error.orgname = "Please enter key";
   }
 
   if (!neworg.name.trim()) {
-    error.nameOrg = "Please enter the name";
+    error.nameOrg = "Please enter name";
   }
-
   Seterr(error); 
 
   
@@ -29,10 +27,6 @@ const form = () => {
     return false; 
   }
 };
-
-
-
-
 
   const navigate=useNavigate();
   const handleChange = (e: { target: { name: string; value: string; }; }) => {
@@ -62,7 +56,11 @@ const form = () => {
           <h1>New Organisation</h1>
           <form onSubmit={handleSubmit}> 
             <input type='text' placeholder='Enter your key name' name='org_name' value={neworg.org_name} onChange={handleChange} />
+            <br/>
+            {err.orgname && <span>{err.orgname}</span>}
             <input type='text' placeholder='Enter name' name='name' value={neworg.name} onChange={handleChange} />
+            <br/>
+            {err.nameOrg && <span>{err.nameOrg}</span>}
             <button type="submit">Submit</button>
           </form>
         </div>

@@ -1,7 +1,6 @@
 
 import {toast } from 'react-toastify';
 export const otpSend = async (email: string) => {
-
     const dataSend = {
         email: email
     }
@@ -16,10 +15,11 @@ export const otpSend = async (email: string) => {
                 dataSend
             )
         })
+        toast.success("OTP SEND");
         console.log("send");
     } catch (err) {
         console.log("not send");
-    }
+    }   
 }
 
 export const otpCheck = async (email: string, otp: string) => {

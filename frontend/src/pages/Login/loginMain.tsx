@@ -5,8 +5,8 @@ export default function Login_main() {
   return (
    
     <div className='mainn'>
-      <Login user="System_User" tagline="Maintaining whole TMS"  color="white" fontColor="#9A639F" className='div'/>
-      <Login user="Organitional_user" tagline="User of a organization" color="#9A639F" fontColor="white" className='div'/>
+      <Login user="System_User" tagline="Maintaining whole TMS" fontColor="#9A639F" className='div'  color="white" />
+      <Login user="Organitional_user" tagline="User of a organization" fontColor="white" className='div' color="#9A639F"/>
       {/* <Table data={[]}></Table> */}
     </div>
     

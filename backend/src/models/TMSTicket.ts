@@ -1,5 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-
 const TMSTicketSchema :Schema=new Schema({
     type:{type:String},
     key:{type:String},
@@ -13,6 +12,5 @@ const TMSTicketSchema :Schema=new Schema({
     due_date:{type:Date},
     
 })
-
 const TMSTicket=mongoose.model("TMSTicket",TMSTicketSchema);
 export default TMSTicket;
