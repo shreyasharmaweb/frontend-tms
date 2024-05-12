@@ -3,7 +3,7 @@ import {NavLink, useNavigate} from 'react-router-dom';
 
 import './allOrg.scss'
 
-import allOrg from '../../services/allorg'
+import allOrg from '../../services/AllOrganisationApi'
 
 interface Orgs{
     org_name:string,

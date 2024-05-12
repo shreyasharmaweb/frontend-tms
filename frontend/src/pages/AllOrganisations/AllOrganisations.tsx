@@ -1,4 +1,4 @@
-import Orgs from '../../organisms/allOrgs/allOrgs'
+import Orgs from '../../organisms/AllOrganisationsOrganism/AllOrganisationOrganism'
 export default function allOrg() {
   return (
     <div>

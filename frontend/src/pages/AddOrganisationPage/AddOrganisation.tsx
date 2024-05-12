@@ -1,4 +1,4 @@
-import AddOrganisation from '../../organisms/addOrg/addOrgs'
+import AddOrganisation from '../../organisms/AddOrganisationOrganism/AddOrganisationOrganism'
 
 export default function addOrgPage() {
   return (

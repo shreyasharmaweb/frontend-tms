@@ -1,4 +1,4 @@
-import AllUsers from '../../organisms/alluserOrg/allUserOrgs'
+import AllUsers from '../../organisms/AllUserOrganisations/AllUserOrganisation'
 export default function allUser() {
   return (
     <div>

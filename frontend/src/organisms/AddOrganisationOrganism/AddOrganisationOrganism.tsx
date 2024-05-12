@@ -1,6 +1,6 @@
 import { useState  } from 'react';
 import { useNavigate } from 'react-router-dom';
-import allorg from '../../services/addOrg';
+import allorg from '../../services/AddOrganisationApi';
 
 export default function OrgNew() {
   const [neworg, setNeworg] = useState({

@@ -1,4 +1,4 @@
-import System_User from '../../organisms/systemUser/systemUser'
+import System_User from '../../organisms/SystemUserOrganism/SystemUserOrg'
 export default function systemUserPage() {
   return (
     <div>

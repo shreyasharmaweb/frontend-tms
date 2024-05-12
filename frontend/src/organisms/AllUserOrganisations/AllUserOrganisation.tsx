@@ -1,5 +1,5 @@
 import  { useEffect, useState } from 'react'
-import allUserservice from '../../services/allUserSystem';
+import allUserservice from '../../services/AllUserOrganisationApi';
 import './AllUserOrgs.scss'
 export default function AllUsers() {
     interface alluser{
