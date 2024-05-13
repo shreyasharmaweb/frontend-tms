@@ -51,7 +51,7 @@ export default function TMS() {
    <h1 className='tmsHeader'>Ticket Generate</h1>
     <div className='tmsForm'>
       <form onSubmit={handleSubmit}  >
-     
+     <div className='types'>
       <div className='task'>
         <h1 className='ty'>Type</h1>
         <select className='tmsSelector' name='type' value={states.type}  onChange={handleChange} required>
@@ -60,6 +60,9 @@ export default function TMS() {
           <option>Bug</option>
         </select>
       </div>
+     
+      </div>
+
       <div className='tmstext'>
         <div>
         <h1>Description</h1>
@@ -70,9 +73,10 @@ export default function TMS() {
         <input type="text" className='text' name='summary' value={states.summary}  onChange={ handleChange} required />
         </div>
       </div>
+      <div className='ussers'>
       <div className='assign' >
         <h1>Assignee</h1>
-        <select name='assignee' value={states.assignee} onChange={handleChange} required>
+        <select className='assinguser' name='assignee' value={states.assignee} onChange={handleChange} required>
           {filteredUsers && filteredUsers.length > 0 ? (
             filteredUsers.map((user, i) => (
                 
@@ -85,10 +89,20 @@ export default function TMS() {
       </div>
       <div className='reporter'>
         <h1>Reporter</h1>
-        <select name='reporter' value={states.reporter} onChange={handleChange} required>
+        <select className='repo' name='reporter' value={states.reporter} onChange={handleChange} required>
           <option>{name}</option>
         </select>
       </div>
+      <div className='status'>
+        <h1>Status</h1>
+        <select className='stat' name='status' value={states.status} onChange={handleChange} required>
+          <option >Completed</option>
+          <option>Pending</option>
+          <option>Incomplete</option>
+        </select>
+      </div>
+      </div>
+      <div className='dates'>
       <div className='created'>  
              <label>Created Date  </label>
              <input type='date' name='created_date' value={states.created_date} onChange={ handleChange}  required/>
@@ -101,15 +115,8 @@ export default function TMS() {
              <label>Due Date</label>
              <input type='date' name='due_date' value={states.due_date} onChange={ handleChange} required/>
       </div>
-      <div className='status'>
-        <h1>Status</h1>
-        <select name='status' value={states.status} onChange={handleChange} required>
-          <option >Completed</option>
-          <option>Pending</option>
-          <option>Incomplete</option>
-        </select>
       </div>
-      <div >
+      <div className='tmsbtn' >
       <button className='btn' type="submit">Submit</button>
       </div>
       </form>

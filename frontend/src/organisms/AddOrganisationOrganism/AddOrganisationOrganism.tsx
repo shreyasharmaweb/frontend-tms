@@ -1,7 +1,7 @@
 import { useState  } from 'react';
 import { useNavigate } from 'react-router-dom';
 import allorg from '../../services/AddOrganisationApi';
-
+import './AddOrganiastion.scss'
 export default function OrgNew() {
   const [neworg, setNeworg] = useState({
     org_name: "",
@@ -57,10 +57,10 @@ const form = () => {
           <form onSubmit={handleSubmit}> 
             <input type='text' placeholder='Enter your key name' name='org_name' value={neworg.org_name} onChange={handleChange} />
             <br/>
-            {err.orgname && <span>{err.orgname}</span>}
+            {err.orgname && <span>{err.orgname}</span>}<br/>
             <input type='text' placeholder='Enter name' name='name' value={neworg.name} onChange={handleChange} />
             <br/>
-            {err.nameOrg && <span>{err.nameOrg}</span>}
+            {err.nameOrg && <span>{err.nameOrg}</span>}<br/>
             <button type="submit">Submit</button>
           </form>
         </div>
@@ -68,3 +68,4 @@ const form = () => {
     </div>
   );
 }
+

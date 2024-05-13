@@ -1,0 +1,60 @@
+
+
+.userFormContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .userForm {
+    background-color: #ab93af; 
+    border-radius: 10px;
+    padding: 20px;
+    width: 30%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .userForm label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .userForm input[type="text"],
+  .userForm input[type="date"],
+  .userForm input[type="email"],
+  .userForm button {
+    width: 80%;
+    padding: 10px;
+    margin-bottom: 15px;
+    margin-left: 10%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+  
+  .userForm button {
+    margin-left:20%;
+    background-color: #fff; 
+    border-radius: 5px;
+    cursor: pointer;
+    width:60%
+   
+  }
+  
+  .userForm button:hover {
+    background-color: #f0f0f0; 
+  }
+  h2{
+    color: #0c0b0b;
+  }
+  body{
+    background-color: #dbc8df;
+  }
+  .formhead{
+    margin-left: 45%;
+  }
+  Navlink{
+     text-decoration: none;
+     
+  }

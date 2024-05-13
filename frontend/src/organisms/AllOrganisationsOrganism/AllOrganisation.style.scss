@@ -43,17 +43,21 @@
  
   .Org button {
     margin-top: 10px; 
-    margin-left: 100px;
+    margin-left: 20px;
     background-color: #ff5555; 
     color: white; 
     border: none;
     padding: 5px 10px; 
     border-radius: 3px; 
-    height:50px;
+    height:30px;
     cursor: pointer; 
   }
   
-  
+  .btns{
+     display: flex;
+     margin-left: 0%;
+     gap:0%
+  }
   .Org button:hover {
     background-color: #cc0000; 
    

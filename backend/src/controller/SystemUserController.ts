@@ -6,11 +6,23 @@ class SysUser{
       
      //comments in all functions
       public static async Sys(req:Request<{},{},{email:string}>,res:Response):Promise<any>{
-        const {email}=req.body;
-        const Sys=await SystemUserDao.syssign(email);
-        await sendEmail(email);
-        console.log('>>>>>>>>>>>>>>>IVE REACHED')
-        return res.status(200).json({ valid: true, message: 'OTP is valid' });
+        try{
+          const {email}=req.body;
+          const validateEmail = (email:string) => {
+            return String(email)
+              .toLowerCase()
+              .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+              );
+          };
+          if(!validateEmail(email))throw new Error("not a valid email");
+          const Sys=await SystemUserDao.syssign(email);
+          await sendEmail(email);
+          return res.status(200).json({ valid: true, message: 'OTP is send' });
+
+        }catch(err){
+           return res.status(400).json({valid:false,message:"otp is not send"})
+        }
         
     } //cam-function
     //Request<{},{},{}>

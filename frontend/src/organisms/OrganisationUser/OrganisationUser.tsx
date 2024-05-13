@@ -16,13 +16,12 @@ export default function OrganisationUser() {
   }
 
   return (
-    
     <div>
         <h1>Select Any Organisation</h1>
       {org.map((e:EType, i:number) => (
         <div className='Org' key={i}>
           <h2>{e.name}</h2>
-          <button onClick={()=>handleUser(e.name)}>{e.org_name}</button>
+          <button onClick={()=>handleUser(e.name)}>Select</button>
         </div>
       ))}
     </div>

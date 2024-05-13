@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {NavLink, useNavigate} from 'react-router-dom';
 
-import './allOrg.scss'
+import './AllOrganisation.style.scss'
 
 import allOrg from '../../services/AllOrganisationApi'
 
@@ -45,12 +45,14 @@ export default function Orgs() {
           <ul>
           
           </ul>
+          <div className='btns'>
           <button onClick={()=>{
             allOrg.del(e.org_name)
             navigate(0);
           }}>Deactivate</button>
           <br/>
           <button onClick={() => Add(e.name)}>Users</button>
+          </div>
         </li>
         </div>
       ))}

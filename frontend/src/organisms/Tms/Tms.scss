@@ -1,8 +1,96 @@
-.tmsForm{
+.tmsForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* To center the form horizontally */
+  // border:2px solid black;
+  width:50%;
+  margin-left: 25%;
+  background-color:rgb(187, 153, 198); 
+  box-shadow: 2px 1px 1px rgb(153, 103, 169);
+}
 
-      margin-left: 600px;
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* To center the form horizontally */
+}
 
+.types {
+  display: flex;
+  justify-content: space-between;
+  width: 23%;
+}
+
+.task,
+.status {
+  flex: 1; /* To make both columns equal width */
+}
+
+.tmstext {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.ussers {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.assign,
+.reporter {
+  flex: 1; /* To make both columns equal width */
+}
+
+.dates {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 32px;
+  gap: 10px;
+}
+
+.created,
+.updated,
+.due {
+  flex: 1; /* To make all date fields equal width */
+}
+
+.tmsbtn {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* Adjust as needed */
+}
+
+.btn {
+  padding: 10px 20px;
+  background-color: #4e1059;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+/* Adjustments */
+.ty, .tmstext h1, .ussers h1, .dates label {
+  margin-bottom: 12px;
+  
+}
+
+.text,.assinguser,.repo,.stat, .tmsSelector, input[type="date"] {
+  width: 80%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  padding: 12px;
+}
+
+.ty, .status h1 {
+  margin-right: 10px;
 }
 .tmsHeader{
-    margin-left: 550px;
+  text-align: center;
+  font-size: 60px;
 }

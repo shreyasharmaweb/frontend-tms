@@ -1,12 +1,13 @@
+import { toast } from "react-toastify";
 
-import {toast } from 'react-toastify';
+// import {toast } from 'react-toastify';
 export const otpSend = async (email: string) => {
     const dataSend = {
         email: email
     }
     // console.log(dataSend);
     try {
-         await fetch("http://localhost:8001/sys/signup", {
+       const res= await fetch("http://localhost:8001/sys/signup", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -15,6 +16,7 @@ export const otpSend = async (email: string) => {
                 dataSend
             )
         })
+        console.log(res);
         toast.success("OTP SEND");
         console.log("send");
     } catch (err) {
@@ -39,10 +41,15 @@ export const otpCheck = async (email: string, otp: string) => {
                 dataSend
             )
         })
-        toast.success("User Created");
         //   setflag(true);
+        if(!response.ok){
+            toast.error("Not Valid Otp")
+        }else{
+            
+            toast.success("User Created");
+        }
+        console.log(response);
         return response;
-        // console.log("send");
     } catch (err) {
         console.log("not send");
     }

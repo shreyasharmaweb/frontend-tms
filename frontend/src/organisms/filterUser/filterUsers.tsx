@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import allUserservice from '../../services/allUserSystem'
-import './filter.scss'
+import allUserservice from '../../services/AllUserOrganisationApi'
+import './FilterUser.style.scss'
 export default function UserOrg() {
   const [dataf, setDataf] = useState<Users[]>([]);
   const {id} = useParams();
@@ -17,7 +17,6 @@ export default function UserOrg() {
   console.log(id);
   console.log('orgName prop:',id);
   const formatDate = (dateString:Date) => {
-    
     return new Date(dateString).toLocaleDateString();
   };
   return (
@@ -30,11 +29,13 @@ export default function UserOrg() {
           filteredUsers && filteredUsers.length > 0 ? (
             filteredUsers.map((user:Users, i) => (
               <div className='Orgee'>
-              <h2 key={i}>{user.first_name}</h2>
-              <h2>{user.last_name}</h2>
-          <label>DOB:</label>    <h2>{formatDate(user.dob)}</h2>
-             <label>Joining date:</label> <h2>{formatDate(user. org_join_date)}</h2>
-              {/* <li>{user.}</li> */}
+              <h2 key={i}>{user.first_name}    {user.last_name}</h2>
+              <div className='join'>
+          <h2>DOB:</h2>
+          <h2>{formatDate(user.dob)}</h2><br/>
+             <h2>Joining date:</h2><h2>{formatDate(user. org_join_date)}</h2>
+              
+              </div>
               </div>
             ))
           ) : (

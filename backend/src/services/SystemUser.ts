@@ -27,7 +27,7 @@ export const sendEmail=
     // SystemUser.otp = otp;
     
 
-    console.log("Inside mail")
+    // console.log("Inside mail")
     var mailOptions={
       from:"shreyasharma7051@gmail.com",
       to:email,
@@ -37,9 +37,9 @@ export const sendEmail=
      
     transporter.sendMail(mailOptions,function(err,info){
        if(err){
-        console.log(err);
+        console.log("wrong email",err);
        }else{
-           console.log(info);
+           console.log("info",info);
        }
     })
 }

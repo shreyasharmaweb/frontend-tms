@@ -1,7 +1,9 @@
 import  { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './Form.scss'
+import DatePicker from 'react-date-picker';
+import './Form.style.scss'
+import { daDK } from 'rsuite/esm/locales';
 const Userform = () => {
   const { key } = useParams();
   const navigate = useNavigate();
@@ -11,9 +13,10 @@ const Userform = () => {
   const [lastName, setLastName] = useState('');
   const [dob, setDob] = useState('');
   const [orgJoinDate, setOrgJoinDate] = useState('');
+  const [date,setdate] = useState(Date.now())
   
   //id,email_id,first_name,last_name,dob,org_join_date
-
+  //  const date=Date.now();
   useEffect(() => {
     console.log('Key:', key);
     if (key) Setorg(key);
@@ -41,7 +44,10 @@ const Userform = () => {
   };
 
   return (
+    <>
+    <h1 className='formhead'>User Form</h1>
     <div className='userFormContainer'>
+     
       {/* <h2>Userform</h2> */}
       {/* <p>Key: {key}</p> */}
       <form className='userForm' onSubmit={handleSubmit}>
@@ -60,24 +66,25 @@ const Userform = () => {
         <div>
           <label>Last Name:</label>
           <br/>
-          <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} required/>
+          <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} required max={new Date().toISOString().split('T')[0]}/>
         </div>
         <br/>
         <div>
           <label>Date of Birth:</label>
           <br/>
-          <input type="date" value={dob} onChange={(e) => setDob(e.target.value)} required/>
+          <input type="date" value={dob} onChange={(e) => setDob(e.target.value)} required max={new Date().toISOString().split('T')[0]}  />
         </div>
         <br/>
         <div>
           <label>Join Date:</label>
           <br/>
-          <input type="date" value={orgJoinDate} onChange={(e) => setOrgJoinDate(e.target.value)} required/>
+          <input type="date" value={orgJoinDate} onChange={(e) => setOrgJoinDate(e.target.value)} required max={new Date().toISOString().split('T')[0]}/>
         </div>
         <br/>
         <button type="submit">Submit</button>
       </form>
     </div>
+    </>
   );
 };
 

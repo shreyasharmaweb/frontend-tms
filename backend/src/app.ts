@@ -3,12 +3,12 @@ import mongoose from 'mongoose';
 import { url, port } from './constants/constants';
 import cors from "cors";
 import router from "./routes/main";
-
+import errorMiddleWare from './middleware/error.middleware';
 const app = express();
 app.use(express.json());
 app.use(cors());
 app.use('/', router); 
-
+app.use(errorMiddleWare);
 async function main() {
     try {
         await connection(url);
