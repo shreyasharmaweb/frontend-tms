@@ -43,7 +43,7 @@ export const otpCheck = async (email: string, otp: string) => {
         })
         //   setflag(true);
         if(!response.ok){
-            toast.error("Not Valid Otp")
+            toast.error("Not Valid OTP");
         }else{
             
             toast.success("User Created");

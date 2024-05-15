@@ -1,0 +1,51 @@
+.Org {
+    display: flex;
+    align-items: center; 
+    margin-bottom: 1rem; 
+    padding: 1rem; 
+    border: 1px solid #eeeeee; 
+    border-radius: 5px; 
+    width: 300px;
+    margin: 32px;
+    background-color: #5e6578;
+  }
+  .selectorg{
+    text-align: center;
+    font-size: 40px;
+    font-weight: 500;
+    color: black;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+  }
+  .Org h2 {
+    margin-right: 1rem; 
+    flex: 1; 
+  }
+  
+  .Org ul {
+    margin: 0;
+    padding: 0; 
+    list-style: none; 
+  }
+  
+  .Org button {
+    margin-left: auto; 
+    border: 1px solid black;
+    width:100px;
+    border-radius: 12px;
+    background-color: #eeeeee;
+  }
+  .btn_org{
+    height: 50px;
+    width:100px;
+    margin-left: 93%;
+  }
+
+  .orgus{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .ho{
+    color: bisque;
+    font-size: 22px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+  }

@@ -6,6 +6,7 @@ import AllOrg from './pages/AllOrganisations/AllOrganisations'
 import Filter from './organisms/FilterUser/FilterUsers'
 import AddOrg from './pages/AddOrganisationPage/AddOrganisation'
 import Choice from './pages/OrganisationUser/OrganisationUser'
+import LoginOrganisationUser from './organisms/LoginOrganisationUser/LoginOrganisationUser'
 import Form from './organisms/FormUser/Form'
 import Tms from './organisms/Tms/Tms'
 export default function routes() {
@@ -22,6 +23,7 @@ return (
                   <Route path='Organitional_user' element={<Choice/>}/>
                   <Route path='userform/:key' element={<Form/>}/>
                   <Route path='/tms/:id/:name' element={<Tms/>}/>
+                  <Route path='/loginuser' element={<LoginOrganisationUser/>}/>
               </Routes>
          </BrowserRouter>
     </div>

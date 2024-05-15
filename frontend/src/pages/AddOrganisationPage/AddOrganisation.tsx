@@ -3,7 +3,9 @@ import AddOrganisation from '../../organisms/AddOrganisationOrganism/AddOrganisa
 export default function addOrgPage() {
   return (
     <div>
-          <AddOrganisation/>
+          <AddOrganisation tog={function (): void {
+        throw new Error('Function not implemented.')
+      } } />
     </div>
   )
 }

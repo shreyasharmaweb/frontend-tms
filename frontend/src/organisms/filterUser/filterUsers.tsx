@@ -1,49 +1,46 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import allUserservice from '../../services/AllUserOrganisationApi'
+import allUserservice from '../../services/AllUserOrganisationApi';
+import { Table } from 'rsuite';
 import './FilterUser.style.scss'
+
 export default function UserOrg() {
-  const [dataf, setDataf] = useState<Users[]>([]);
-  const {id} = useParams();
-  console.log(id);
+  const { id } = useParams();
+  const [filteredUsers, setFilteredUsers] = useState([]);
+
   useEffect(() => {
     allUserservice.allusers()
-      .then(res => setDataf(res))
-      .catch(err => console.log('error', err));
-  }, []); 
-  
-  const filteredUsers = dataf.filter(user => user.organisation === id);
-  console.log(filteredUsers);
-  console.log(id);
-  console.log('orgName prop:',id);
-  const formatDate = (dateString:Date) => {
-    return new Date(dateString).toLocaleDateString();
-  };
+      .then(res => {
+        const users = res.filter((user: { organisation: string}) => user.organisation === id);
+        setFilteredUsers(users);
+      })
+      .catch(err => console.error('Error fetching users:', err));
+  }, [id]); 
+
   return (
-    <>
-    <h1>Users for Organization: {id}</h1>
-    <div className='usermain' >
-      
-      <ul>
-        {
-          filteredUsers && filteredUsers.length > 0 ? (
-            filteredUsers.map((user:Users, i) => (
-              <div className='Orgee'>
-              <h2 key={i}>{user.first_name}    {user.last_name}</h2>
-              <div className='join'>
-          <h2>DOB:</h2>
-          <h2>{formatDate(user.dob)}</h2><br/>
-             <h2>Joining date:</h2><h2>{formatDate(user. org_join_date)}</h2>
-              
-              </div>
-              </div>
-            ))
-          ) : (
-            <li>No users found</li>
-          )
-        }
-      </ul>
+    <div>
+      <h1 className='usrh'>Users for Organization: {id?.toUpperCase()}</h1>
+      <div className='usermain'>
+
+        <Table data={filteredUsers} autoHeight bordered cellBordered>
+          <Table.Column width={200}>
+            <Table.HeaderCell>First Name</Table.HeaderCell>
+            <Table.Cell dataKey='first_name' ></Table.Cell> 
+          </Table.Column>
+          <Table.Column width={200}>
+            <Table.HeaderCell>Last Name</Table.HeaderCell>
+            <Table.Cell dataKey='last_name' ></Table.Cell> 
+          </Table.Column>
+          <Table.Column width={200}>
+            <Table.HeaderCell>DOB</Table.HeaderCell>
+            <Table.Cell dataKey='dob' >{rowData => new Date(rowData.dob).toLocaleString().split(",")[0]}</Table.Cell> 
+          </Table.Column>
+          <Table.Column width={200}>
+            <Table.HeaderCell>Joining Date</Table.HeaderCell>
+            <Table.Cell dataKey='org_join_date' >{rowData => new Date(rowData.org_join_date).toLocaleString().split(",")[0]}</Table.Cell> 
+          </Table.Column>
+        </Table>
+      </div>
     </div>
-    </>
   );
 }

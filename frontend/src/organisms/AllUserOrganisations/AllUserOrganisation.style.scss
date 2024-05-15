@@ -1,34 +1,13 @@
-
-.AllUserss {
-    background-color: #af8fb3; 
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-    margin-bottom: 20px;
-    padding: 15px;
-    transition: transform 0.2s ease-in-out; 
-    height:260px;
-    width: 330px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .AllUserss:hover {
-    transform: translateY(-5px); 
-  }
-  
-  .mainAll{
-    display: flex;
-    flex-wrap: wrap;
-    gap:10px;
-  }
-  
-  .AllUserss h2:nth-child(2),
-  .AllUserss h2:nth-child(3) {
-    font-weight: bold;
-  }
-  
-  
-  .AllUserss h2 {
-    margin: 5px 0;
-  }
+.tablehead{
+  font-size: 20px;  
+}
+.tab{
+  padding: 9px;
+  width: 100px;
+}
+.all_user{
+  text-align: center;
+  font-size: 62px;
+  color:black;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}

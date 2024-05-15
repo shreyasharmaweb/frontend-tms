@@ -1,40 +1,46 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import DatePicker from 'react-date-picker';
+
 import './Form.style.scss'
-import { daDK } from 'rsuite/esm/locales';
+
+
 const Userform = () => {
   const { key } = useParams();
   const navigate = useNavigate();
-  const [org,Setorg]=useState('');
+  const [org, setOrg] = useState('');
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [dob, setDob] = useState('');
   const [orgJoinDate, setOrgJoinDate] = useState('');
-  const [date,setdate] = useState(Date.now())
   
-  //id,email_id,first_name,last_name,dob,org_join_date
-  //  const date=Date.now();
+
   useEffect(() => {
     console.log('Key:', key);
-    if (key) Setorg(key);
+    if (key) setOrg(key);
   }, [key]);
 
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
-    e.preventDefault(); 
+    e.preventDefault();
 
     console.log(org);
     try {
       const response = await axios.post("http://localhost:8001/orguser/signup", {
         key,
-        organisation:org, 
-        email_id:email,
+        organisation: org,
+        email_id: email,
         first_name: firstName,
         last_name: lastName,
         dob,
         org_join_date: orgJoinDate
+
+        // organisation: modalDataId,
+        // email_id: email,
+        // first_name: firstName,
+        // last_name: lastName,
+        // dob,
+        // org_join_date: orgJoinDate
       });
       console.log("done", response);
       navigate(`/tms/${org}/${firstName}`);
@@ -44,47 +50,34 @@ const Userform = () => {
   };
 
   return (
-    <>
-    <h1 className='formhead'>User Form</h1>
-    <div className='userFormContainer'>
-     
-      {/* <h2>Userform</h2> */}
-      {/* <p>Key: {key}</p> */}
-      <form className='userForm' onSubmit={handleSubmit}>
-        <div>
-          <label>Email:</label>
-          <br/>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}  required/>
-        </div>
-        <br/>
-        <div>
-          <label>First Name:</label>
-          <br/>
-          <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} required/>
-        </div>
-        <br/>
-        <div>
-          <label>Last Name:</label>
-          <br/>
-          <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} required max={new Date().toISOString().split('T')[0]}/>
-        </div>
-        <br/>
-        <div>
-          <label>Date of Birth:</label>
-          <br/>
-          <input type="date" value={dob} onChange={(e) => setDob(e.target.value)} required max={new Date().toISOString().split('T')[0]}  />
-        </div>
-        <br/>
-        <div>
-          <label>Join Date:</label>
-          <br/>
-          <input type="date" value={orgJoinDate} onChange={(e) => setOrgJoinDate(e.target.value)} required max={new Date().toISOString().split('T')[0]}/>
-        </div>
-        <br/>
-        <button type="submit">Submit</button>
-      </form>
+    <div className='formval px-4 py-8'>
+      <h1 className=' text-2xl font-bold mb-8'>User Form</h1>
+      <div className='max-w-md mx-auto'>
+        <form className='bg-white border rounded-lg shadow-md px-8 py-6 space-y-4' onSubmit={handleSubmit}>
+          <div>
+            <label className='block' htmlFor='email'>Email:</label>
+            <input id='email' type='email' className='w-full border rounded px-4 py-2' placeholder='Enter email' value={email} onChange={(e) => setEmail(e.target.value)} required />
+          </div>
+          <div>
+            <label className='block' htmlFor='firstName'>First Name:</label>
+            <input id='firstName' type='text' className='w-full border rounded px-4 py-2' placeholder='Enter First Name' value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
+          </div>
+          <div>
+            <label className='block' htmlFor='lastName'>Last Name:</label>
+            <input id='lastName' type='text' className='w-full border rounded px-4 py-2' placeholder='Enter Last Name' value={lastName} onChange={(e) => setLastName(e.target.value)} required max={new Date().toISOString().split('T')[0]} />
+          </div>
+          <div>
+            <label className='block' htmlFor='dob'>DOB:</label>
+            <input id='dob' type='date' className='w-full border rounded px-4 py-2' value={dob} onChange={(e) => setDob(e.target.value)} required max={new Date().toISOString().split('T')[0]} />
+          </div>
+          <div>
+            <label className='block' htmlFor='orgJoinDate'>Join Date:</label>
+            <input id='orgJoinDate' type='date' className='w-full border rounded px-4 py-2' value={orgJoinDate} onChange={(e) => setOrgJoinDate(e.target.value)} required max={new Date().toISOString().split('T')[0]} />
+          </div>
+          <button type='submit' className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded'>Submit</button>
+        </form>
+      </div>
     </div>
-    </>
   );
 };
 

@@ -1,18 +1,20 @@
+
 .tmsForm {
   display: flex;
   flex-direction: column;
-  align-items: center; /* To center the form horizontally */
-  // border:2px solid black;
-  width:50%;
+  align-items: center; 
+  width: 50%;
   margin-left: 25%;
-  background-color:rgb(187, 153, 198); 
-  box-shadow: 2px 1px 1px rgb(153, 103, 169);
+  background-color: #5e6578; 
+  box-shadow: 2px 1px 1px rgb(74, 72, 74);
+  border-radius: 10px;
+  margin-top: 27px;
 }
 
 .formContainer {
   display: flex;
   flex-direction: column;
-  align-items: center; /* To center the form horizontally */
+  align-items: center; 
 }
 
 .types {
@@ -23,12 +25,12 @@
 
 .task,
 .status {
-  flex: 1; /* To make both columns equal width */
+  flex: 1; 
 }
 
 .tmstext {
   display: flex;
-  justify-content: space-between;
+  gap:85px;
   width: 100%;
 }
 
@@ -40,7 +42,7 @@
 
 .assign,
 .reporter {
-  flex: 1; /* To make both columns equal width */
+  flex: 1; 
 }
 
 .dates {
@@ -54,43 +56,53 @@
 .created,
 .updated,
 .due {
-  flex: 1; /* To make all date fields equal width */
+  flex: 1; 
 }
 
 .tmsbtn {
   display: flex;
   justify-content: center;
-  margin-top: 20px; /* Adjust as needed */
+  margin-top: 2px; 
 }
 
 .btn {
   padding: 10px 20px;
-  background-color: #4e1059;
-  color: white;
+  background-color: #e3e6ed;
+  color: rgb(16, 16, 16);
   border: none;
   cursor: pointer;
+  border-radius: 10px;
+  margin: 10px;
 }
-
-/* Adjustments */
-.ty, .tmstext h1, .ussers h1, .dates label {
-  margin-bottom: 12px;
-  
-}
-
-.text,.assinguser,.repo,.stat, .tmsSelector, input[type="date"] {
+.text,
+.assinguser,
+.repo,
+.stat,
+.tmsSelector,
+input[type="date"] {
   width: 80%;
   padding: 8px;
-  margin-bottom: 10px;
+  // margin-bottom: 1px;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
-  padding: 12px;
+  // padding: 12px;
 }
-
-.ty, .status h1 {
+.ty,
+.status h1 {
   margin-right: 10px;
 }
-.tmsHeader{
+.tmsHeader {
   text-align: center;
   font-size: 60px;
+  margin-top: 52px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+h1 {
+  font-size: 19px;
+  color: #e3e6ed;
+}
+label{
+  color: #ccc;
+  font-size: 19px;
 }

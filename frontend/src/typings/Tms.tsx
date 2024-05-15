@@ -8,8 +8,6 @@
 // updated_date:"",
 // due_date:""
 type Tms={
-   
-    
     type:string,
     summary:string,
     description:string,

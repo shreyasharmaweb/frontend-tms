@@ -29,7 +29,7 @@ export default function TMS() {
   };
 
   useEffect(() => {
-     const res=filterorg.filter()
+     filterorg.filter()
       .then(res => setNames(res))
      
   }, []);
@@ -48,11 +48,11 @@ export default function TMS() {
   };
 
   return (<>
-   <h1 className='tmsHeader'>Ticket Generate</h1>
+   <h2 className='tmsHeader'>Ticket Generate</h2>
     <div className='tmsForm'>
       <form onSubmit={handleSubmit}  >
      <div className='types'>
-      <div className='task'>
+      <div className='task due'>
         <h1 className='ty'>Type</h1>
         <select className='tmsSelector' name='type' value={states.type}  onChange={handleChange} required>
           <option>Task</option>
@@ -89,8 +89,18 @@ export default function TMS() {
       </div>
       <div className='reporter'>
         <h1>Reporter</h1>
-        <select className='repo' name='reporter' value={states.reporter} onChange={handleChange} required>
+        {/* <select className='repo' name='reporter' value={states.reporter} onChange={handleChange} required>
           <option>{name}</option>
+        </select> */}
+         <select className='assinguser' name='assignee' value={states.assignee} onChange={handleChange} required>
+          {filteredUsers && filteredUsers.length > 0 ? (
+            filteredUsers.map((user, i) => (
+                
+              <option key={i} >{user.first_name}</option>
+            ))
+          ) : (
+            <option>No users found</option>
+          )}
         </select>
       </div>
       <div className='status'>
@@ -105,15 +115,15 @@ export default function TMS() {
       <div className='dates'>
       <div className='created'>  
              <label>Created Date  </label>
-             <input type='date' name='created_date' value={states.created_date} onChange={ handleChange}  required/>
+             <input type='date' name='created_date' value={states.created_date} onChange={ handleChange}  required max={new Date().toISOString().split('T')[0]}/>
       </div>
       <div className='updated'>  
              <label>Updated Date  </label>
-             <input type='date' name='updated_date' value={states.updated_date} onChange={ handleChange} required/>
+             <input type='date' name='updated_date' value={states.updated_date} onChange={ handleChange} required max={new Date().toISOString().split('T')[0]}/>
       </div>
       <div className='due'>  
              <label>Due Date</label>
-             <input type='date' name='due_date' value={states.due_date} onChange={ handleChange} required/>
+             <input type='date' name='due_date' value={states.due_date} onChange={ handleChange} required max={new Date().toISOString().split('T')[0]}/>
       </div>
       </div>
       <div className='tmsbtn' >

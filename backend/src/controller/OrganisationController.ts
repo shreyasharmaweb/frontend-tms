@@ -5,8 +5,6 @@ import Orgdao from '../dao/OrganisationDao'
 class Org{
     public static  async sign(req:Request,res:Response){
             const {org_name,name}=req.body;
-            // const Org=new Organisation({org_name,name}); //dao
-            // await Org.save();
             Orgdao.signO(org_name,name);
             res.status(201).json({success:true});
     }

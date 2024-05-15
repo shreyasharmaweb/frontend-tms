@@ -4,7 +4,7 @@ import {sendEmail} from '../services/SystemUser';
 import SystemUserDao from '../dao/SystemUserDao'
 class SysUser{
       
-     //comments in all functions
+     
       public static async Sys(req:Request<{},{},{email:string}>,res:Response):Promise<any>{
         try{
           const {email}=req.body;
@@ -23,9 +23,7 @@ class SysUser{
         }catch(err){
            return res.status(400).json({valid:false,message:"otp is not send"})
         }
-        
-    } //cam-function
-    //Request<{},{},{}>
+    } 
 
     public static async otpUser(req:Request<{},{},{email:string,otp:string}>,res:Response){
       const{email,otp}=req.body;

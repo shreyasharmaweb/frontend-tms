@@ -6,4 +6,5 @@ type UserLogin={
     color:string,
     fontColor:string,
     className:string
+    link:string
 }
