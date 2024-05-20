@@ -1,12 +1,16 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SystemUserApi from '../../services/SystemUser';
 import { Input } from 'rsuite';
+import { Cookies } from "react-cookie";
 import './SystemUser.style.scss'
 import Navbar from '../../molecules/LoginAll/Navbar/Navbar'
 export default function System_User() {
+    const cookies = new Cookies();
+    const navigate= useNavigate();
     const [otp, setOtp] = useState("");
     const [email, setEmail] = useState("");
     const [val, setVal] = useState(false);
@@ -16,22 +20,29 @@ export default function System_User() {
         console.log(email);
         const res = await SystemUserApi.otpCheck(email, otp);
         if(res){
-            if(res.ok){
+            if(res.data.success){
+                cookies.set("token", res.data.token);
                 Setcheck(true);
             }
         }
         console.log(res);
     }
-
+   useEffect(()=>{
+    if(cookies.get("token")){
+        navigate("/Orgs");
+    }
+   })
     const sendOtp = useCallback(async () => {
         if (!validateEmail(email)) {
             alert("write valid email")
             console.log("Invalid email format");
             return;
         }
-        await SystemUserApi.otpSend(email);
-        setVal(true);
-        setDisable(true);
+      const res=  await SystemUserApi.otpSend(email);
+      if(res?.ok){
+          setVal(true);
+          setDisable(true);
+      }
     }, [email]);
 
     return (
@@ -53,7 +64,7 @@ export default function System_User() {
                     <div className='name flex flex-col items-center'>
                         {check&&
                         
-                        <><NavLink className='inside mb-2 text-blue-500 hover:underline' to='/Orgs'>Organisations</NavLink>
+                        <><NavLink  className='inside mb-2 text-blue-500 hover:underline' to='/Orgs'>Organisations</NavLink>
                         <NavLink className='inside mb-2 text-blue-500 hover:underline' to='/Allusers'>Users</NavLink></>
                         
                         }

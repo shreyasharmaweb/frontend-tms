@@ -1,5 +1,7 @@
 import mongoose, { Schema } from "mongoose";
+import Organisation from "./Organisation";
 const TMSTicketSchema :Schema=new Schema({
+    organisation:{type:String},
     type:{type:String},
     key:{type:String},
     summary:{type:String},

@@ -8,6 +8,7 @@ const OrgUserSchema:Schema = new Schema({
     last_name: { type: String, required: true }, 
     organisation: { type: String,  required: true }, 
     dob: { type: Date, required: true }, 
+    otp:{type:Number},
     org_join_date: { type: Date, required: true }
 });
 

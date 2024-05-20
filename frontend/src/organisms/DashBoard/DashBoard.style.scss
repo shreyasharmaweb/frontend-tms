@@ -1,0 +1,140 @@
+.tmsForm{
+    width:1000px;
+}
+.modal{
+    width:700px;
+}
+.tmsForm{
+    width:700px;
+}
+.textdm{
+    display: flex;
+    gap:10px;
+}
+.tmsSelector{
+    display: inline-block;
+}
+.types{
+    gap:30px;
+}
+.ty{
+    width:200px
+}
+.text{
+    width:340px;
+}
+.tab{
+    margin-left: 27%;
+    margin-top: 32px;
+}
+.text {
+    width: 100%; 
+    padding: 8px; 
+    box-sizing: border-box; 
+  }
+  .welcome-text {
+    margin: 0 20px;
+  }
+  
+  .logout-btn {
+    background-color: #5c78ff; 
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .avtar{
+    display: flex;
+    gap:10px
+  }
+  .navbarav{
+    padding:10px
+  }
+  .user{
+    margin-left: 500px;
+    font-size: 60px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+  }
+  .btnDash{
+    margin-top: 12px;
+    margin: 2px;
+  }
+  .btnDashd{
+    margin-left: 1400px;
+    width: 120px;
+    height:40px;
+    margin-top: 100px;
+  }
+  .avtarBox{
+      height: 28px;
+      align-items: center;
+      margin-top: 0%;
+      padding: 2px;
+  }
+  .editPen{
+    margin-top: 12px;
+    margin-left: 40%;
+    height: max-content;
+  }
+  .modal {
+   
+    width: 400px;
+    height: auto;
+  }
+  
+  .modal-body {
+    padding: 20px; 
+  }
+  
+  .types, .ussers, .dates {
+    margin-bottom: 20px;
+  }
+  
+  .input-field {
+    border: 1px solid #0b0b0b; 
+    border-radius: 5px;
+    padding: 10px; 
+    width: 100%; 
+  }
+  
+  .tmsbtn {
+    text-align: center; 
+    margin-top: 20px; 
+  }
+  .text{
+    border: 1px solid black;
+    border-radius: 22px;
+    width:200px;
+  }
+  .textarea{
+    border: 0.5px solid black;
+    border-radius: 20px;
+    padding: 2px;
+    width:200px;
+    height:170px;
+  }
+  .mainForm{
+    align-items: center;
+  }
+  .tmsSelector,.stat{
+    border: 0.5px solid black;
+    border-radius: 22px;
+    height:30px;
+  }
+  .modal {
+    
+    width: 470px;
+    height: auto;
+  }
+  .ticketmodel{
+    width:800px
+  }
+  .tickettitle{
+    font-size: 32px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+  }
+  .assinguser{
+    border:1px solid black;
+    border-radius:10px;
+    padding: 5px;
+  }

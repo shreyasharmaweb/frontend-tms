@@ -1,21 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';//
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import{ToastContainer,toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import filterorg from '../../services/Filter';
 import './Tms.scss';
+import { Cookies } from 'react-cookie';
 export default function TMS() {
+  const cookies = new Cookies();
   const [names, setNames] = useState<Users[]>([]);
   const { id } = useParams();
-  const{name}=useParams();
-
+  const {name}=useParams();
   const[states,Setstates]=useState<Tms>({
       type:"",
       summary:"",
       description:"",
       assignee:"",  
-      reporter:"",
       status:"",
       created_date:"",
       updated_date:"",
@@ -24,25 +24,35 @@ export default function TMS() {
    
   const handleChange = (e: { target: { name: any; value: any; }; }) => {
     const { name, value } = e.target;
-    console.log(name, value);
     Setstates(prev=>({...prev, [name]: value }));
   };
 
   useEffect(() => {
      filterorg.filter()
       .then(res => setNames(res))
-     
+      const token =cookies.get("token")
+      console.log(token);
   }, []);
   
-  const filteredUsers = names.filter(user => user.organisation === id);
+  
   
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault(); 
+    const token =cookies.get("token")
     try {
-      const response = await axios.post("http://localhost:8001/tms/addticket", states);
-      console.log("done", response);
-      toast.success("Ticket Generated");
-    } catch (error) {
+      const response = await axios.post("http://localhost:8001/tms/addticket", states , {
+        headers: {
+          "Authorization" : `Bearer ${token}`
+        }
+    });
+      console.log("doneeqwfvdewdf", response);
+      if(response.data.success){
+        toast.success("Ticket Generated");
+      }else{
+        toast.error("Not in same organisation");
+      }
+    } catch (error:any) {
+      toast.error(error);
       console.error("Error:", error);
     }
   };
@@ -76,7 +86,7 @@ export default function TMS() {
       <div className='ussers'>
       <div className='assign' >
         <h1>Assignee</h1>
-        <select className='assinguser' name='assignee' value={states.assignee} onChange={handleChange} required>
+        {/* <select className='assinguser' name='assignee' value={states.assignee} onChange={handleChange} required>
           {filteredUsers && filteredUsers.length > 0 ? (
             filteredUsers.map((user, i) => (
                 
@@ -85,14 +95,15 @@ export default function TMS() {
           ) : (
             <option>No users found</option>
           )}
-        </select>
+        </select> */}
+          <input type="text" className='text' name='assignee' value={states.assignee}   onChange={ handleChange} required/>
       </div>
       <div className='reporter'>
         <h1>Reporter</h1>
         {/* <select className='repo' name='reporter' value={states.reporter} onChange={handleChange} required>
           <option>{name}</option>
         </select> */}
-         <select className='assinguser' name='assignee' value={states.assignee} onChange={handleChange} required>
+         {/* <select className='assinguser' name='reporter' value={states.reporter} onChange={handleChange} required>
           {filteredUsers && filteredUsers.length > 0 ? (
             filteredUsers.map((user, i) => (
                 
@@ -101,7 +112,8 @@ export default function TMS() {
           ) : (
             <option>No users found</option>
           )}
-        </select>
+        </select> */}
+      
       </div>
       <div className='status'>
         <h1>Status</h1>
@@ -123,7 +135,7 @@ export default function TMS() {
       </div>
       <div className='due'>  
              <label>Due Date</label>
-             <input type='date' name='due_date' value={states.due_date} onChange={ handleChange} required max={new Date().toISOString().split('T')[0]}/>
+             <input type='date' name='due_date' value={states.due_date} onChange={ handleChange} required/>
       </div>
       </div>
       <div className='tmsbtn' >

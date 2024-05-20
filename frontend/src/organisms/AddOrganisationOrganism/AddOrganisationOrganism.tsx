@@ -1,5 +1,4 @@
 import { useState  } from 'react';
-// import { useNavigate } from 'react-router-dom';
 import allorg from '../../services/AddOrganisationApi';
 
 import CloseOutlineIcon from '@rsuite/icons/CloseOutline';
@@ -34,7 +33,6 @@ const form = () => {
   }
 };
 
-  // const navigate=useNavigate();
   const handleChange = (e: { target: { name: string; value: string; }; }) => {
     const { name, value } = e.target;
     setNeworg(prev=>({...prev, [name]: value }));
