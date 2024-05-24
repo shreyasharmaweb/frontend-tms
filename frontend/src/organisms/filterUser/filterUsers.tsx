@@ -3,12 +3,17 @@ import { useParams } from 'react-router-dom';
 import allUserservice from '../../services/AllUserOrganisationApi';
 import { Table } from 'rsuite';
 import './FilterUser.style.scss'
+import { Cookies } from 'react-cookie';
 
 export default function UserOrg() {
   const { id } = useParams();
+  const cookies=new Cookies();
   const [filteredUsers, setFilteredUsers] = useState([]);
 
   useEffect(() => {
+    const token=cookies.get("token");
+    console.log(token);
+    
     allUserservice.allusers()
       .then(res => {
         const users = res.filter((user: { organisation: string}) => user.organisation === id);
@@ -16,6 +21,8 @@ export default function UserOrg() {
       })
       .catch(err => console.error('Error fetching users:', err));
   }, [id]); 
+
+
 
   return (
     <div>
@@ -38,6 +45,10 @@ export default function UserOrg() {
           <Table.Column width={200}>
             <Table.HeaderCell>Joining Date</Table.HeaderCell>
             <Table.Cell dataKey='org_join_date' >{rowData => new Date(rowData.org_join_date).toLocaleString().split(",")[0]}</Table.Cell> 
+          </Table.Column>
+          <Table.Column width={200}>
+            <Table.HeaderCell>Email</Table.HeaderCell>
+            <Table.Cell dataKey='email_id' ></Table.Cell> 
           </Table.Column>
         </Table>
       </div>

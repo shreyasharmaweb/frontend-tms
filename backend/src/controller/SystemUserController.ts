@@ -5,6 +5,7 @@ import SystemUserDao from "../dao/SystemUserDao";
 import TMSTicket from "../models/TMSTicket";
 import jwtService from "../helper/jwt.helper";
 import AdminAuthorizer from "../helper/auth-admin";
+import { FilterQuery } from "mongoose";
 class SysUser {
   public static async Sys(
     req: Request<{}, {}, { email: string }>,
@@ -47,7 +48,7 @@ class SysUser {
     }
     if (user.otp == otp) {
       const token = jwtService.signToken({ email: email, role: "admin" });
-      console.log(token);
+     // console.log(token);
       return res
         .status(200)
         .send({ success: "true", message: "Login Successfully ", token });
@@ -61,24 +62,91 @@ class SysUser {
         });
   }
 
-  public static async ticketUsers(req: Request, res: Response) {
-    const { authorized } = await AdminAuthorizer.authorizeAdmin(req, res);
-    if (!authorized) {
-      return res.status(403).json({
-        success: false,
-        message: "Unauthorized: Only authenticated users can view tickets",
-      });
-    }
-    const users = await TMSTicket.find();
+//   public static async ticketUsers(req: Request, res: Response) {
+//     const { authorized } = await AdminAuthorizer.authorizeAdmin(req, res);
+//     if (!authorized) {
+//       return res.status(403).json({
+//         success: false,
+//         message: "Unauthorized: Only authenticated users can view tickets",
+//       });
+//     }
+//     const users = await TMSTicket.find();
 
-    if (!users) {
-      return res
-        .status(404)
-        .json({ valid: false, message: "Tickets not found" });
-    } else {
-      return res.status(202).json({ users });
+//     if (!users) {
+//       return res
+//         .status(404)
+//         .json({ valid: false, message: "Tickets not found" });
+//     } else {
+//       return res.status(202).json({ users });
+//     }
+//   }
+// }
+
+public static async ticketUsers(req: Request, res: Response) {
+  const { authorized } = await AdminAuthorizer.authorizeAdmin(req, res);
+  if (!authorized) {
+    return res.status(403).json({
+      success: false,
+      message: "Unauthorized: Only authenticated users can view tickets",
+    });
+  }
+
+  const type: string | undefined = req.query.type as string;
+  const status: string | undefined = req.query.status as string;
+  const due_date: string | undefined = req.query.due_date as string;
+  const created_date: string | undefined = req.query.created_date as string;
+  const updated_date: string | undefined = req.query.updated_date as string;
+  const assignee:string|undefined=req.query.assignee as string;
+
+ // console.log(req.query.type,req.query.status,req.query.due_date);
+      
+  const filter: FilterQuery<typeof TMSTicket> = {};
+  if (type) {
+    filter.type = type;
+  }
+  if (status) {
+    filter.status = status;
+  }
+  if (due_date) {
+    const parsedDueDate = new Date(due_date);
+    filter.dueDate = {
+      $gte: new Date(parsedDueDate.setHours(0, 0, 0, 0)),
+      $lt: new Date(parsedDueDate.setHours(23, 59, 59, 999))
+    };
+  }
+  if(created_date){
+    const parsedcreated=new Date(created_date);
+    filter.created_date={
+      $gte: new Date(parsedcreated.setHours(0, 0, 0, 0)),
+      $lt: new Date(parsedcreated.setHours(23, 59, 59, 999))
     }
   }
+  if(updated_date){
+    const parsedupdated=new Date(updated_date);
+    filter.updated_date={
+      $gte: new Date(parsedupdated.setHours(0, 0, 0, 0)),
+      $lt: new Date(parsedupdated.setHours(23, 59, 59, 999))
+    }
+  }
+  if(assignee){
+     filter.assignee=assignee;
+  }
+
+ // console.log(req.query.type, req.query.status, req.query.due_date);
+
+  const users = await TMSTicket.find(filter);
+
+  // const users = await TMSTicket.find();
+
+  if (!users) {
+    return res
+      .status(404)
+      .json({ valid: false, message: "Tickets not found" });
+  } else {
+    return res.status(202).json({ users });
+  }
+}
 }
 
 export default SysUser;
+

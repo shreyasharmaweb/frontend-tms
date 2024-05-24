@@ -17,7 +17,7 @@ class TmsControl {
       status,
       due_date,
     } = req.body;
-    console.log("Key ", key);
+   // console.log("Key ", key);
     try {
       const { authorized, organisation, email } =
         await UserAuthorizer.authorizeUser(req, res);
@@ -55,56 +55,8 @@ class TmsControl {
     }
   }
  
-  // all tickets of Organisation and email
-  // public static async allTickets(req: Request, res: Response) {
-  //   try {
-  //     const { authorized, organisation, email } =
-  //       await UserAuthorizer.authorizeUser(req, res);
-  //     if (!authorized) {
-  //       return res.status(403).json({
-  //         success: false,
-  //         message: "Unauthorized: Only authenticated users can view tickets",
-  //       });
-  //     }
-  //     const type: string | undefined = req.query.type as string;
-  //     const status: string | undefined = req.query.status as string;
-  //     const dueDate: string | undefined = req.query.dueDate as string;
-
-  //     const tickets = await TMSTicket.find({ organisation, assignee: email });
-      
-  //     const filter: FilterQuery<typeof TMSTicket> = { organisation, assignee: email };
-  //     if (type) {
-  //       filter.type = type;
-  //     }
-  //     if (status) {
-  //       filter.status = status;
-  //     }
-  //     if (dueDate) {
-  //       const parsedDueDate = new Date(dueDate);
-  //       filter.dueDate = {
-  //         $gte: new Date(parsedDueDate.setHours(0, 0, 0, 0)),
-  //         $lt: new Date(parsedDueDate.setHours(23, 59, 59, 999))
-  //       };
-  //     }
-      
-  //     const organisationOfUser = await OrgUser.find({organisation});
-  //     console.log(organisationOfUser);
-       
-  //     res.status(200).json({ tickets,organisationOfUser});  
-
-  //   } catch (error: any) {
-  //     res
-  //       .status(500)
-  //       .json({ message: "Failed to fetch tickets", error: error.message });
-  //   }
-  // }
-
 
   public static async allTickets(req: Request, res: Response) {
-    // console.log("*************************************************************");
-    
-    console.log(req.query.type,req.query.status,req.query.due_date);
-
     try {
       const { authorized, organisation, email } =
         await UserAuthorizer.authorizeUser(req, res);
@@ -114,13 +66,14 @@ class TmsControl {
           message: "Unauthorized: Only authenticated users can view tickets",
         });
       }
+      
+      const page: number = parseInt(req.query.page as string) || 1;
+      const limit: number = parseInt(req.query.limit as string)||10;
       const type: string | undefined = req.query.type as string;
       const status: string | undefined = req.query.status as string;
       const due_date: string | undefined = req.query.due_date as string;
-
-      console.log(req.query.type,req.query.status,req.query.due_date);
-      
-
+      const created_date: string | undefined = req.query.created_date as string;
+      const updated_date: string | undefined = req.query.updated_date as string;
       
       const filter: FilterQuery<typeof TMSTicket> = { organisation, assignee: email };
       if (type) {
@@ -131,21 +84,39 @@ class TmsControl {
       }
       if (due_date) {
         const parsedDueDate = new Date(due_date);
-        filter.dueDate = {
+        filter.due_date = {
           $gte: new Date(parsedDueDate.setHours(0, 0, 0, 0)),
           $lt: new Date(parsedDueDate.setHours(23, 59, 59, 999))
         };
       }
+      if(created_date){
+        const parsedcreated=new Date(created_date);
+        filter.created_date={
+          $gte: new Date(parsedcreated.setHours(0, 0, 0, 0)),
+          $lt: new Date(parsedcreated.setHours(23, 59, 59, 999))
+        }
+      }
+      if(updated_date){
+        const parsedupdated=new Date(updated_date);
+        filter.created_date={
+          $gte: new Date(parsedupdated.setHours(0, 0, 0, 0)),
+          $lt: new Date(parsedupdated.setHours(23, 59, 59, 999))
+        }
+      }
+      
+      const skip: number = (page - 1) * limit;
+      const tickets = await TMSTicket.find(filter)
+        .skip(skip)
+        .limit(limit);
+      const totalTickets = await TMSTicket.countDocuments(filter);
 
-      const tickets = await TMSTicket.find(filter);
-
-     // console.log(tickets)
 
       
+          
       const organisationOfUser = await OrgUser.find({organisation});
-      //console.log(organisationOfUser);
+      
        
-      res.status(200).json({ tickets,organisationOfUser});  
+      res.status(200).json({ tickets,currentPage: page,totalPages: Math.ceil(totalTickets/limit),organisationOfUser});  
 
     } catch (error: any) {
       res
@@ -153,10 +124,10 @@ class TmsControl {
         .json({ message: "Failed to fetch tickets", error: error.message });
     }
   }
-
-  //Updating the tickets
   public static async update(req: Request, res: Response) {
     const { _id, type, status, due_date } = req.body;
+    let historyLogs = []; 
+  
     try {
       const { authorized, organisation, email } =
         await UserAuthorizer.authorizeUser(req, res);
@@ -166,17 +137,48 @@ class TmsControl {
           message: "Unauthorized: Only authenticated users can view tickets",
         });
       }
+  
+      const ticket = await TMSTicket.findOne({ _id });
+      if (!ticket) {
+        return res.send("failed to update");
+      } else {
+        if (ticket.type !== type) {
+          historyLogs.push({ userName: email, fieldName: 'Type', oldValue: ticket.type, newValue: type });
+          ticket.type = type;
+        }
+  
+        if (ticket.dueDate !== due_date) {
+          const formattedOldDueDate = ticket.dueDate ? TmsControl.formatDate(ticket.dueDate.toString()) : null;
+          const formattedNewDueDate = due_date ? TmsControl.formatDate(due_date) : null;
+          historyLogs.push({ userName: email, fieldName: 'Due Date', oldValue: formattedOldDueDate, newValue: formattedNewDueDate });
+          ticket.dueDate = due_date;
+        }
+        if (ticket.status !== status) {
+          historyLogs.push({ userName: email, fieldName: 'Status', oldValue: ticket.status, newValue: status });
+          ticket.status = status;
+        }
+      }
 
-      // console.log("waefsvzdwefdewfdg");
+      //console.log(historyLogs);
+  
       const Response = await TMSTicket.updateOne(
         { _id: _id },
-        { $set: { type, status, due_date,updated_date:new Date() } }
+        { $set: { type, status, due_date, updated_date: new Date() } ,History:historyLogs}
       );
-      // console.log(Response);
+      //console.log(Response);
+      
       return res.send(Response);
     } catch (err) {
       return res.status(500).json({ message: "Failed to fetch tickets" });
     }
+  }
+  
+  static  formatDate = (date: string): string => {
+    const d = new Date(date);
+    const day = d.getDate().toString().padStart(2, '0');
+    const month = (d.getMonth() + 1).toString().padStart(2, '0');
+    const year = d.getFullYear();
+    return `${day}-${month}-${year}`;
   }
 
   //Fetching the tickets of particular organisation

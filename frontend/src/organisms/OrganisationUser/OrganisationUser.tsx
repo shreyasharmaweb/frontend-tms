@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Organisation from "../../services/OrganisationUserApi";
 import "./OrganisationsUser.style.scss";
 import "../FormUser/Form.style.scss";
+import { Cookies } from "react-cookie";
 import React from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -18,8 +19,11 @@ export default function OrganisationUser() {
 
   const [modalDataId, setModalDataId] = useState("");
 
+  const cookies =new Cookies();
+  const token=cookies.get("token");
+  //console.log(token);
   useEffect(() => {
-    Organisation.OrganisationUser()
+    Organisation.OrganisationUser(token)
       .then((res) => setOrg(res))
       .catch((err) => console.log(err));
   }, []);
@@ -29,7 +33,7 @@ export default function OrganisationUser() {
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
-    console.log(org);
+   // console.log(org);
     try {
       const response = await axios.post(
         "http://localhost:8001/orguser/signup",
@@ -43,19 +47,35 @@ export default function OrganisationUser() {
         }
       );
 
-      console.log("done", response);
+     // console.log("done", response);
       if (response.status == 201) {
-        navigate("/loginuser");
+        toast("user created");
+        setOrgJoinDate("");
+        setEmail("");
+        setFirstName("");
+        setLastName("");
+        setDob("");
+        handleClose();
+
+       // navigate("/loginuser");
       }
     } catch (error) {
       toast.error("User Already Exist");
-      console.error("Error:", error);
+     // console.error("Error:", error);
     }
   };
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = (name: string) => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOrgJoinDate("");
+    setEmail("");
+    setFirstName("");
+    setLastName("");
+    setDob("");
+    
+    setOpen(false)
+  };
   return (
     <>
       <h1 style={{ color: "black" }} className="selectorg">
@@ -155,7 +175,6 @@ export default function OrganisationUser() {
                         value={orgJoinDate}
                         onChange={(e) => setOrgJoinDate(e.target.value)}
                         required
-                        max={new Date().toISOString().split("T")[0]}
                       />
                     </div>
                     <button

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Avatar, Button, Modal, Tooltip, Whisper } from "rsuite";
+import { ToastContainer, toast } from "react-toastify";
 import "./AllOrganisation.style.scss";
 import allOrg from "../../services/AllOrganisationApi";
 import AddOrg from "../AddOrganisationOrganism/AddOrganisationOrganism";
@@ -10,9 +11,7 @@ import CreativeIcon from "@rsuite/icons/Creative";
 import GearIcon from "@rsuite/icons/Gear";
 import { Cookies } from "react-cookie";
 import { Table } from "rsuite";
-import { Navbar, Nav } from 'rsuite';
-
-
+import { Navbar, Nav } from "rsuite";
 
 const { Column, HeaderCell, Cell } = Table;
 import allorg from "../../services/AddOrganisationApi";
@@ -20,24 +19,46 @@ interface Orgs {
   org_name: string;
   name: string;
 }
+interface FilterOptions {
+  type: string;
+  status: string;
+  due_date: string;
+  created_date: string;
+  updated_date: string;
+  assignee: string;
+}
+
+// Add state variables for confirmation modal
 
 export default function Orgs() {
   const cookies = new Cookies();
-  const token=cookies.get("token");
+  const token = cookies.get("token");
   const [data, setData] = useState<Orgs[]>([]);
   const navigate = useNavigate();
   const [toggle, Settoggle] = useState(false);
-  const [openmodal,SetopenModal]=useState(false);
+  const [openmodal, SetopenModal] = useState(false);
+  const [filtered, Setfiltered] = useState<FilterOptions>({
+    type: "",
+    status: "",
+    due_date: "",
+    created_date: "",
+    updated_date: "",
+    assignee: "",
+  });
+
   const [alltickets, setalltickets] = useState<any>([]);
+
+  const [confirmDeleteOrg, setConfirmDeleteOrg] = useState(false);
+  const [orgToDelete, setOrgToDelete] = useState("");
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose =
-    () => {
-      setOpen(false);
-      SetopenModal(false);
-    }
+  const handleClose = () => {
+    Seterr({ org_name: "", name: "" });
+    setOpen(false);
+    SetopenModal(false);
+  };
 
- 
   const fetchData = () => {
     allOrg
       .allOrgs(token)
@@ -47,31 +68,42 @@ export default function Orgs() {
 
   const fetchTicktes = () => {
     allOrg
-      .allTickets(token)
+      .allTickets(token, filtered)
       .then((res) => {
         setalltickets(res);
       })
       .catch((err) => {
         console.log("errors", err);
       });
-    console.log(alltickets);
+    
   };
   useEffect(() => {
-    if(!cookies.get("token")){
-      navigate('/System_User');
-   }
+    if (!cookies.get("token")) {
+      navigate("/System_User");
+    }
     fetchData();
     fetchTicktes();
-  }, []);
+  }, [filtered]);
 
   const Add = (name: string) => {
     navigate(`/UserOrg/${name}`);
+  };
+
+  // Function to open the confirmation modal
+  const handleConfirmDelete = (orgName: string) => {
+    setOrgToDelete(orgName);
+    setConfirmDeleteOrg(true);
   };
 
   const handleDeactivate = (orgName: string) => {
     allOrg.del(orgName).then(() => {
       fetchData();
     });
+  };
+  // Function to handle actual deletion of organization
+  const confirmDeactivateOrg = (orgName: string) => {
+    handleDeactivate(orgName);
+    setConfirmDeleteOrg(false);
   };
 
   const onToggle = () => {
@@ -109,41 +141,85 @@ export default function Orgs() {
     setNeworg((prev) => ({ ...prev, [name]: value }));
   };
 
-  const logout=()=>{
+  const logout = () => {
     cookies.remove("token");
-    if(!cookies.get("token")){
-       navigate('/System_User');
-    }
-  }
+  
+      navigate("/");
+    
+  };
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
+    //console.log("weaerfsgrdth");
     const flag = form();
     if (flag) {
       try {
-        const response = await allorg.add(neworg,token);
+        const response = await allorg.add(neworg, token);
         fetchData();
-        console.log("done", response);
+       // console.log("done", response);
+        if (!response.data.success) {
+          toast.error("Organisation Exist");
+        }
         handleClose();
+        toast("Organisation Added");
       } catch (error) {
-        console.error("Error:", error);
+       // console.error("Error:", error);
       }
     }
   };
+
+  const handleBack = async () => {
+    Setfiltered({
+      type: "",
+      status: "",
+      due_date: "",
+      created_date: "",
+      updated_date: "",
+      assignee: "",
+    });
+    //console.log(filtered);
+    
+    // fetchTicktes();
+    handleClose();
+  };
+
+  const handleFilterChange = (
+    e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
+  ) => {
+    Setfiltered({ ...filtered, [e.target.name]: e.target.value });
+    
+  };
+ // console.log(filtered);
   return (
     <>
-    <Navbar>
-    <Navbar.Brand href="#"> Admin</Navbar.Brand>
-    <Nav>
-      <Button onClick={()=>{navigate("/Allusers")}} className="btnnavbar" appearance="primary">Users</Button>
-        
-    </Nav>
-    <Nav pullRight>
-     <Button className="btnnavbar" appearance="primary" onClick={()=>{SetopenModal(true)}}>Filter</Button> 
-    <Button className="btnnavbar" appearance="primary" onClick={logout}>Logout</Button>
-     
-    </Nav>
-  </Navbar>
+      <Navbar>
+        <Navbar.Brand href="#"> Admin</Navbar.Brand>
+        <Nav>
+          <Button
+            onClick={() => {
+              navigate("/Allusers");
+            }}
+            className="btnnavbar"
+            appearance="primary"
+          >
+            Users
+          </Button>
+        </Nav>
+        <Nav pullRight>
+          <Button
+            className="btnnavbar"
+            appearance="primary"
+            onClick={() => {
+              SetopenModal(true);
+            }}
+          >
+            Filter
+          </Button>
+          <Button className="btnnavbar" appearance="primary" onClick={logout}>
+            Logout
+          </Button>
+        </Nav>
+      </Navbar>
       <h1 className="text-2xl font-bold mb-4">Organisations</h1>
       <div className="flex flex-wrap -mx-4">
         {data.map((e: Orgs, i: number) => (
@@ -151,13 +227,11 @@ export default function Orgs() {
             <div className="bg-white rounded-lg shadow-md p-6">
               <h2 className="text-lg  mb-2">{e.name.toUpperCase()}</h2>
               <p className="text-gray-600">{e.org_name}</p>
-              <p>{ }</p>
+              <p>{}</p>
               <div className="flex justify-between mt-4">
                 <button
                   className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
-                  onClick={() => {
-                    handleDeactivate(e.org_name);
-                  }}
+                  onClick={() => handleConfirmDelete(e.org_name)}
                 >
                   Deactivate
                 </button>
@@ -178,7 +252,9 @@ export default function Orgs() {
                       />
                       <br />
                       {err.orgname && (
-                        <span style={{color:"red"}} className="span">{err.orgname}</span>
+                        <span style={{ color: "red" }} className="span">
+                          {err.orgname}
+                        </span>
                       )}
                       <br />
                       <input
@@ -191,10 +267,18 @@ export default function Orgs() {
                       />
                       <br />
                       {err.nameOrg && (
-                        <span style={{color:"red"}} className="span">{err.nameOrg}</span>
+                        <span style={{ color: "red" }} className="span">
+                          {err.nameOrg}
+                        </span>
                       )}
                       <br />
-                      <button className="subbtn" type="submit">
+                      <button
+                        className="subbtn"
+                        type="submit"
+                        onClick={() => {
+                          Seterr({ org_name: "", name: "" });
+                        }}
+                      >
                         Submit
                       </button>
                     </form>
@@ -225,10 +309,10 @@ export default function Orgs() {
         style={{
           display: "flex",
           justifyContent: "center",
-          // marginTop: "200px",
         }}
       >
-        <Table virtualized height={800}  width={1000} data={alltickets}>
+      
+        <Table virtualized height={800} width={1000} data={alltickets}>
           <Column width={70} align="center" fixed>
             <HeaderCell>Organisation</HeaderCell>
             <Cell dataKey="organisation" />
@@ -272,9 +356,7 @@ export default function Orgs() {
               {(rowData) => (
                 <Whisper
                   followCursor
-                  speaker={
-                    <Tooltip>{rowData.assignee.split("@")[0]}</Tooltip>
-                  }
+                  speaker={<Tooltip>{rowData.assignee.split("@")[0]}</Tooltip>}
                 >
                   <Avatar
                     className="avtarBox"
@@ -306,70 +388,172 @@ export default function Orgs() {
             </Cell>
           </Column>
 
-
           <Column flexGrow={1}>
-              <HeaderCell>Status</HeaderCell>
-              <Cell>
-                {(rowData) => {
-                  let statusColor = "";
-                  switch (rowData.status) {
-                    case "COMPLETED":
-                      statusColor = "blue";
-                      break;
-                    case "TOBEPICKED":
-                      statusColor = "green";
-                      break;
-                    case "INPROGRESS":
-                      statusColor = "red";
-                      break;
-                    default:
-                      statusColor = "black";
-                      break;
-                  }
-                  return (
-                    <span style={{ color: statusColor }}>{rowData.status}</span>
-                  );
-                }}
-              </Cell>
-            </Column>
+            <HeaderCell>Status</HeaderCell>
+            <Cell>
+              {(rowData) => {
+                let statusColor = "";
+                switch (rowData.status) {
+                  case "COMPLETED":
+                    statusColor = "blue";
+                    break;
+                  case "TOBEPICKED":
+                    statusColor = "green";
+                    break;
+                  case "INPROGRESS":
+                    statusColor = "red";
+                    break;
+                  default:
+                    statusColor = "black";
+                    break;
+                }
+                return (
+                  <span style={{ color: statusColor }}>{rowData.status}</span>
+                );
+              }}
+            </Cell>
+          </Column>
         </Table>
       </div>
-  
-
 
       <Modal keyboard={false} open={openmodal} onClose={handleClose}>
         <Modal.Header>
-          <Modal.Title>Modal Title</Modal.Title>
+          <Modal.Title>Filter Tickets</Modal.Title>
         </Modal.Header>
-
         <Modal.Body>
-       
+          <form>
+            <div className="typefilter">
+              <h1>Type</h1>
+              <select
+                name="type"
+                className="typeselect"
+                value={filtered.type}
+                onChange={handleFilterChange}
+              >
+                <option value="">Select Type</option>
+                <option value="Story">Story</option>
+                <option value="Bug">Bug</option>
+                <option value="Task">Task</option>
+              </select>
+            </div>
+            <div className="Statusfilter">
+              <h1>Status</h1>
+              <select
+                name="status"
+                className="typeselect"
+                value={filtered.status}
+                onChange={handleFilterChange}
+              >
+                <option value="">Select Status</option>
+                <option value="COMPLETED">COMPLETED</option>
+                <option value="INTESTING">INTESTING</option>
+                <option value="INPROGRESS">INPROGRESS</option>
+                <option value="TOBEPICKED">TOBEPICKED</option>
+              </select>
+            </div>
+            <div className="Duefilter">
+              <h1>Due Date</h1>
+              <input
+                className="typeselect"
+                name="due_date"
+                value={filtered.due_date}
+                onChange={handleFilterChange}
+                type="date"
+              ></input>
+            </div>
+            <div className="Createdfilter">
+              <h1>Created Date</h1>
+              <input
+                className="typeselect"
+                name="created_date"
+                value={filtered.created_date}
+                onChange={handleFilterChange}
+                type="date"
+              ></input>
+            </div>
+            <div className="Updatedfilter">
+              <h1>Updated Date</h1>
+              <input
+                className="typeselect"
+                name="updated_date"
+                value={filtered.updated_date}
+                onChange={handleFilterChange}
+                type="date"
+              ></input>
+            </div>
+            <div className="Assigneefilter">
+              <h1>Assignee</h1>
+
+              <select
+                className="assinguser"
+                name="assignee"
+                value={filtered.assignee}
+                onChange={handleFilterChange}
+                required
+              >
+                <option value="">Select Email</option>
+                {Array.from(
+                  new Set(alltickets.map((user: any) => user.assignee))
+                ).map((assignee: any, index: number) => (
+                  <option key={index}>{assignee}</option>
+                ))}
+              </select>
+            </div>
+          </form>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={handleClose} appearance="primary">
             Ok
           </Button>
-          <Button onClick={handleClose} appearance="subtle">
+          <Button
+            onClick={(e) => {
+              e.stopPropagation();
+              handleBack();
+            }}
+            appearance="subtle"
+          >
+            Clear
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal
+        keyboard={false}
+        open={confirmDeleteOrg}
+        onClose={() => setConfirmDeleteOrg(false)}
+      >
+        <Modal.Header>
+          <Modal.Title>Confirm Deactivation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to deactivate the organization{" "}
+          <strong>{orgToDelete}</strong>?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            onClick={() => confirmDeactivateOrg(orgToDelete)}
+            appearance="primary"
+          >
+            Yes
+          </Button>
+          <Button
+            onClick={() => setConfirmDeleteOrg(false)}
+            appearance="subtle"
+          >
             Cancel
           </Button>
         </Modal.Footer>
       </Modal>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       <div className="fixed bottom-4 right-4">
+        <button
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold  py-10 px-4 rounded"
+          onClick={() => {
+            navigate("/Organitional_user");
+          }}
+        >
+          Add User
+        </button>
         <button
           onClick={() => {
             handleOpen();
@@ -380,6 +564,7 @@ export default function Orgs() {
           Add New Organization{" "}
         </button>
       </div>
+      <ToastContainer></ToastContainer>
     </>
   );
 }

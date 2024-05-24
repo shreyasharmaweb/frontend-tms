@@ -12,7 +12,7 @@ const TMSTicketSchema :Schema=new Schema({
     created_date:{type:Date},
     updated_date:{type:Date},
     due_date:{type:Date},
-    
+    History:{type:Array}
 })
 const TMSTicket=mongoose.model("TMSTicket",TMSTicketSchema);
 export default TMSTicket;

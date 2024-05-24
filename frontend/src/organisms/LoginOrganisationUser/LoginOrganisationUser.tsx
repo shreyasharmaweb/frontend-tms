@@ -1,15 +1,17 @@
+
 import { Input } from "rsuite";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Cookies } from "react-cookie";
-import { ToastContainer,toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+
 export default function LoginOrganisationUser() {
   const cookies = new Cookies();
   const [otp, setOtp] = useState("");
   const [email, setEmail] = useState("");
   const [org, Setorg] = useState("");
-  const [check, setcheck] = useState(false);
+  const [check, setCheck] = useState(false);
 
   useEffect(() => {
     if (cookies.get("token")) {
@@ -20,6 +22,11 @@ export default function LoginOrganisationUser() {
   const navigate = useNavigate();
 
   const sentUserOtp = async () => {
+    if(!email){
+      toast("Enter valid email")
+      return;
+    }
+
     const dataSend = {
       email_id: email,
     };
@@ -33,7 +40,7 @@ export default function LoginOrganisationUser() {
       });
      
       if(res.ok){
-        setcheck(true);
+        setCheck(true);
         toast.success("OTP SEND");
         }else{
             toast.error("User Invalid")
@@ -42,25 +49,54 @@ export default function LoginOrganisationUser() {
       console.log("not send");
     }
   };
+
+  const handleOtpChange = (val: any) => {
+    if (val.length <= 6) {
+      setOtp(val);
+    }
+  };
+
+  const validateUser = ()=>{
+    if(!email || !otp || !org){
+      toast.error("Enter all details");
+      return false;
+    }
+    return true;
+  }
+
   const SubmitCheck = async () => {
+
+    if(!validateUser()){
+      return;
+    }
+
     const data = {
       email_id: email,
       otp: otp,
       organisation: org,
     };
-    const res = await axios.post(
-      "http://localhost:8001/orguser/loginuser",
-      data
-    );
-    console.log(res.data);
-    if (res.data.success) {
-      cookies.set("token", res.data.token);
-      navigate("/dashboard", { state: { name: email } });
+    try {
+      const res = await axios.post(
+        "http://localhost:8001/orguser/loginuser",
+        data
+      );
+      console.log(res.data.message , '************');
+      if (res.data.success) {
+        cookies.set("token", res.data.token);
+        navigate("/dashboard", { state: { name: email } });
+      } else {
+          toast.error(res.data.message);
+      }
+    } catch (error : any) {
+      console.log(error.response.data.message);
+      toast.error(error.response.data.message);
+      console.error("Error:", error);
+     
     }
   };
+
   return (
     <>
-    <div>
       <div className="sys flex justify-center items-center h-screen bg-gray-200">
         <div className="mm">
           <h1 className="head mb-8 text-3xl text-center text-gray-800">
@@ -74,14 +110,14 @@ export default function LoginOrganisationUser() {
               value={email}
               onChange={(val) => setEmail(val)}
             />
-            {!check&&
-            <button
-              className="otpbtn bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-              onClick={sentUserOtp}
-            >
-              Get OTP
-            </button>
-        }
+            {!check &&
+              <button
+                className="otpbtn bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+                onClick={sentUserOtp}
+              >
+                Get OTP
+              </button>
+            }
             {check && (
               <>
                 <Input
@@ -93,10 +129,10 @@ export default function LoginOrganisationUser() {
                 />
                 <Input
                   className="email_input"
-                  type="text"
+                  type="number"
                   placeholder="Enter OTP"
                   value={otp}
-                  onChange={(val) => setOtp(val)}
+                  onChange={handleOtpChange} 
                 />
                 <div className="w-full">
                   <button
@@ -112,9 +148,8 @@ export default function LoginOrganisationUser() {
           </div>
         </div>
       </div>
-
-    </div>
-    <ToastContainer position="top-right" />
+      <ToastContainer position="top-right" />
     </>
   );
 }
+
