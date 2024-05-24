@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 import allUserservice from '../../services/AllUserOrganisationApi';
 import { Table } from 'rsuite';
 import './AllUserOrganisation.style.scss'
-
+import { Cookies } from 'react-cookie';
 const { Column, HeaderCell, Cell } = Table;
-
+const cookies = new Cookies();
+const token=cookies.get("token");
 export default function AllUsers() {
     interface User {
         email_id: string,
@@ -27,14 +28,14 @@ export default function AllUsers() {
     const totalColumns = 6; 
     const totalWidth = 1500; 
 
-    const columnWidth = totalWidth / totalColumns;
+    const columnWidth = totalWidth / (totalColumns );
 
     return (
 
         <>
             <h1 className='all_user'>Users</h1>
             <div className='tableuser'>
-                <Table className='tab' width={totalWidth} data={users} autoHeight>
+                <Table  className='tab' width={totalWidth} data={users} autoHeight>
                     <Column width={300} align="center">
                         <HeaderCell className='tablehead'>Email ID</HeaderCell>
                         <Cell dataKey="email_id" />

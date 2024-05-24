@@ -6,10 +6,12 @@ import 'rsuite/dist/rsuite.min.css'
 import { CustomProvider } from 'rsuite'
 import Approutes from './routes.tsx';
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <CustomProvider>
         <Approutes/>
     </CustomProvider>
-    {/* <App /> */}
-  </React.StrictMode>,
+    // {/* <App /> */}
+  // </React.StrictMode>,
 )
+
+

@@ -1,15 +1,15 @@
-.tmsForm{
-    width:1000px;
-}
-.modal{
-    width:700px;
-}
-.tmsForm{
-    width:700px;
-}
+// .tmsForm{
+//     width:1000px;
+// }
+// .modal{
+//     width:500px;
+// }
+// .tmsForm{
+//     width:700px;
+// }
 .textdm{
     display: flex;
-    gap:10px;
+   gap:10px;
 }
 .tmsSelector{
     display: inline-block;
@@ -17,35 +17,37 @@
 .types{
     gap:30px;
 }
-.ty{
-    width:200px
-}
-.text{
-    width:340px;
-}
-.tab{
-    margin-left: 27%;
-    margin-top: 32px;
-}
-.text {
-    width: 100%; 
-    padding: 8px; 
-    box-sizing: border-box; 
-  }
-  .welcome-text {
-    margin: 0 20px;
-  }
+// .ty{
+//     width:200px
+// }
+// .text{
+//     width:440px;
+
+// }
+// .tab{
+//     margin-left: 25%;
+//     margin-top: 32px;
+// }
+// .text {
+//     width: 100%; 
+//     padding: 8px; 
+//     box-sizing: border-box; 
+//   }
+//   .welcome-text {
+//     margin: 0 20px;
+//   }
   
-  .logout-btn {
-    background-color: #5c78ff; 
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
+//   .logout-btn {
+//     background-color: #5c78ff; 
+//     color: white;
+//     border: none;
+//     border-radius: 4px;
+//     cursor: pointer;
+//   }
   .avtar{
     display: flex;
-    gap:10px
+    gap:10px;
+    margin-bottom: 12px;
   }
   .navbarav{
     padding:10px
@@ -57,60 +59,63 @@
   }
   .btnDash{
     margin-top: 12px;
-    margin: 2px;
+    margin: 5px;
+    
   }
-  .btnDashd{
-    margin-left: 1400px;
-    width: 120px;
-    height:40px;
-    margin-top: 100px;
-  }
+//   .btnDashd{
+//     // margin-bottom: 1200px;
+//     margin-right: 1800px;
+//     width: 120px;
+//     height:40px;
+//     margin-top: 0px;
+//   }
   .avtarBox{
       height: 28px;
       align-items: center;
       margin-top: 0%;
       padding: 2px;
   }
-  .editPen{
-    margin-top: 12px;
-    margin-left: 40%;
-    height: max-content;
-  }
-  .modal {
+//   .editPen{
+//     margin-top: 12px;
+//     margin-left: 10%;
+//     height: max-content;
+//   }
+//   .modal {
    
-    width: 400px;
-    height: auto;
-  }
+//     width: 400px;
+//     height: auto;
+//   }
   
-  .modal-body {
-    padding: 20px; 
-  }
+//   .modal-body {
+//     padding: 15px; 
+//   }
   
   .types, .ussers, .dates {
     margin-bottom: 20px;
   }
   
-  .input-field {
-    border: 1px solid #0b0b0b; 
-    border-radius: 5px;
-    padding: 10px; 
-    width: 100%; 
-  }
+//   .input-field {
+//     border: 1px solid #0b0b0b; 
+//     border-radius: 5px;
+//     padding: 10px; 
+//     width: 100%; 
+//   }
   
-  .tmsbtn {
-    text-align: center; 
-    margin-top: 20px; 
-  }
+//   .tmsbtn {
+//     text-align: center; 
+//     margin-top: 20px; 
+//   }
   .text{
     border: 1px solid black;
-    border-radius: 22px;
-    width:200px;
+    border-radius: 0.4rem;
+    width:330px;
+    height:100px;
   }
   .textarea{
     border: 0.5px solid black;
-    border-radius: 20px;
+    border-radius: 0.4rem;
     padding: 2px;
-    width:200px;
+    width:330px;
     height:170px;
   }
   .mainForm{
@@ -118,23 +123,114 @@
   }
   .tmsSelector,.stat{
     border: 0.5px solid black;
-    border-radius: 22px;
-    height:30px;
+    border-radius: 0.4rem;
+    height:33px;
   }
   .modal {
     
-    width: 470px;
+    width: 400px;
     height: auto;
   }
   .ticketmodel{
-    width:800px
+    width:900px
   }
-  .tickettitle{
-    font-size: 32px;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-  }
+//   .tickettitle{
+//     font-size: 32px;
+//     font-family: Georgia, 'Times New Roman', Times, serif;
+//   }
   .assinguser{
     border:1px solid black;
-    border-radius:10px;
+    border-radius:0.4rem;
     padding: 5px;
+    width: 320px;
   }
+// .editbtn{
+//   margin-left: 100px;
+// }
+// .his{
+//   font-size: 22px;
+// }
+.flex-data{
+  display: flex;
+  gap:19px
+}
+.filtertype{
+  border: 1px solid black;
+  border-radius: 0.4rem;
+  width: 120px;
+  height:42px;
+  margin-top:12px
+}
+.statusfilter{
+  border: 1px solid black;
+  border-radius: 0.4rem;
+  width: 120px;
+  height:42px;
+  margin-top:12px
+}
+.modalfilter{
+  width:300px;
+ // margin-left: 1200px;
+
+}
+.footer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+// /* Default styles */
+
+// .tab {
+//   margin-left: 25%;
+//   margin-top: 32px;
+// }
+
+// .user {
+//   margin-left: 500px;
+//   font-size: 60px;
+//   font-family: Georgia, 'Times New Roman', Times, serif;
+// }
+
+
+
+
+.modalfilter {
+  width: 300px;
+ // margin-left: 1200px;
+}
+
+
+// @media only screen and (max-width: 768px) {
+//   .tab {
+//     margin-left: 10%;
+//   }
+
+
+
+  
+
+//   .modalfilter {
+//     margin-left: 0; 
+//   }
+// }
+
+
+// @media only screen and (min-width: 769px) and (max-width: 1024px) {
+//   .tab {
+//     margin-left: 15%;
+//   }
+
+
+
+
+  .modalfilter {
+    //margin-left: 1200px; 
+  }
+// }
+// .maindiv{
+//   position: relative;
+// }
+.btnclear{
+  display: flex;
+  gap:12px
+}

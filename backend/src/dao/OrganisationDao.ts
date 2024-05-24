@@ -16,8 +16,7 @@ class Orgdao {
 
     public static async allorgDao(): Promise<any>{
         
-         return await Organisation.find(); //find
-        // console.log("Returning: " , org);
+         return await Organisation.find(); 
       
     }
     public static async delete(org_name:string){
